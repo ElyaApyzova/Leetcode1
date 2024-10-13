@@ -182,3 +182,44 @@ class Solution {
     return count <= 1;
   }
 }
+
+
+//247 https://leetcode.com/problems/strobogrammatic-number-ii/
+
+//Input: n = 2
+//Output: ["11","69","88","96"]
+
+class Solution {
+  constructor() {
+    this.reversiblePairs = [
+      ['0', '0'], ['1', '1'], ['6', '9'], ['8', '8'], ['9', '6']
+    ];
+  }
+
+  generateStroboNumbers(n, finalLength) {
+    if (n === 0) {
+      return [""];
+    }
+
+    if (n === 1) {
+      return ["0", "1", "8"];
+    }
+
+    const prevStroboNums = this.generateStroboNumbers(n - 2, finalLength);
+    const currStroboNums = [];
+
+    for (const prevStroboNum of prevStroboNums) {
+      for (const pair of this.reversiblePairs) {
+        if (pair[0] !== '0' || n !== finalLength) {
+          currStroboNums.push(pair[0] + prevStroboNum + pair[1]);
+        }
+      }
+    }
+    return currStroboNums;
+  }
+
+  findStrobogrammatic(n) {
+    return this.generateStroboNumbers(n, n);
+  }
+}
+
