@@ -137,3 +137,22 @@ function isAnagram(s, t) {
 // Input: num = "69"
 //Output: true
 
+
+class Solution {
+  isStrobogrammatic(num) {
+    let rotated = "";
+    for (let i = num.length - 1; i >= 0; i--) {
+      const c = num[i];
+      if (c === '0' || c === '1' || c === '8') {
+        rotated += c;
+      } else if (c === '6') {
+        rotated += '9';
+      } else if (c === '9') {
+        rotated += '6';
+      } else {
+        return false;
+      }
+    }
+    return num === rotated;
+  }
+}
