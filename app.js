@@ -156,3 +156,29 @@ class Solution {
     return num === rotated;
   }
 }
+
+
+//266 https://leetcode.com/problems/palindrome-permutation/description/
+
+
+//Input: s = "code"
+//Output: false
+
+
+
+class Solution {
+  canPermutePalindrome(s) {
+    const map = new Array(128).fill(0);
+    let count = 0;
+    for (const char of s) {
+      const index = char.charCodeAt(0);
+      map[index]++;
+      if (map[index] % 2 === 0) {
+        count--;
+      } else {
+        count++;
+      }
+    }
+    return count <= 1;
+  }
+}
