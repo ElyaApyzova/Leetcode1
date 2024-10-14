@@ -322,3 +322,46 @@ class Solution {
 }
 
 
+//250 https://leetcode.com/problems/count-univalue-subtrees/
+
+
+// Input: root = [5,1,5,5,5,null,5]
+//Output: 4
+
+
+class TreeNode {
+  constructor(val = 0, left = null, right = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+class Solution {
+  constructor() {
+    this.count = 0;
+  }
+
+  dfs(node) {
+    if (node === null) {
+      return true;
+    }
+
+    const isLeftUniValue = this.dfs(node.left);
+    const isRightUniValue = this.dfs(node.right);
+
+    if (isLeftUniValue && isRightUniValue) {
+      if (node.left !== null && node.left.val !== node.val) {
+        return false;
+      }
+      this.count++;
+      return true;
+    }
+    return false;
+  }
+
+  countUnivalSubtrees(root) {
+    this.dfs(root);
+    return this.count;
+  }
+}
