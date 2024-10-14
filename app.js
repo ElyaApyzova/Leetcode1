@@ -255,3 +255,70 @@ class Solution {
 }
 
 
+//267 https://leetcode.com/problems/palindrome-permutation-ii/description/
+
+// Input: s = "aabb"
+//Output: ["abba","baab"]
+
+
+class Solution {
+  constructor() {
+    this.set = new Set();
+  }
+
+  generatePalindromes(s) {
+    const map = new Array(128).fill(0);
+    const st = new Array(Math.floor(s.length / 2)).fill('');
+    if (!this.canPermutePalindrome(s, map)) {
+      return [];
+    }
+
+    let ch = '';
+    let k = 0;
+    for (let i = 0; i < map.length; i++) {
+      if (map[i] % 2 === 1) {
+        ch = String.fromCharCode(i)
+      }
+
+      for (let j = 0; j < Math.floor(map[i] / 2); j++) {
+        st[k++] = String.fromCharCode(i);
+      }
+    }
+    this.permute(st, 0, ch);
+    return Array.from(this.set);
+  }
+
+  canPermutePalindrome(s, map) {
+    let count = 0;
+    for (const char of s) {
+      const index = char.charCodeAt(0);
+      map[index]++;
+      if (map[index] % 2 === 0) {
+        count--;
+      } else {
+        count++;
+      }
+    }
+    return count <= 1;
+  }
+
+  swap(s, i, j) {
+    [s[i], s[j]] = [s[j], s[i]];
+  }
+
+  permute(s, l, ch) {
+    if (l === s.length) {
+      this.set.add(s.join('') + (ch === '' ? '' : ch) + s.slice().reverse().join(''));
+    } else {
+      for (let i = l; i < s.length; i++) {
+        if (s[l] !== s[i] || l === i) {
+          this.swap(s, l, i);
+          this.permute(s, l + 1, ch);
+          this.swap(s, l, i);
+        }
+      }
+    }
+  }
+}
+
+
