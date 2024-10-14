@@ -223,3 +223,35 @@ class Solution {
   }
 }
 
+
+// 249 https://leetcode.com/problems/group-shifted-strings/
+
+// Input: strings = ["abc","bcd","acef","xyz","az","ba","a","z"]
+
+//Output: [["acef"],["a","z"],["abc","bcd","xyz"],["az","ba"]]
+
+class Solution {
+  shiftLetter(letter, shift) {
+    return String.fromCharCode((letter.charCodeAt(0) - shift + 26) % 26 + 'a'.charCodeAt(0));
+  }
+
+  getHash(s) {
+    const shift = s.charCodeAt(0);
+    return Array.from(s, letter => this.shiftLetter(letter, shift)).join('');
+  }
+
+  groupStrings(strings) {
+    const mapHashToList = new Map();
+
+    for (const str of strings) {
+      const hashKey = this.getHash(str);
+      if (!mapHashToList.has(hashKey)) {
+        mapHashToList.set(hashKey, []);
+      }
+      mapHashToList.get(hashKey).push(str);
+    }
+    return Array.from(mapHashToList.values());
+  }
+}
+
+
