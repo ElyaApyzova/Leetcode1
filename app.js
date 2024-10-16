@@ -401,3 +401,28 @@ class Vector2D {
   }
 }
 
+
+
+//268 https://leetcode.com/problems/missing-number/
+
+
+// Input: nums = [3,0,1]
+//Output: 2
+//Explanation: n = 3 since there are 3 numbers, so all numbers are in the range [0,3]. 2 is the missing number in the range since it does not appear in nums.
+
+const missingNumber = function(nums) {
+  nums.sort((a, b) => a - b)
+  if (nums[nums.length - 1] != nums.length) {
+    return nums.length
+  } else if (nums[0] != 0) {
+    return 0
+  }
+
+  for (let i = 1; i < nums.length; i++) {
+    let expectedNum = nums[i - 1] + 1
+    if (nums[i] != expectedNum) {
+      return expectedNum
+    }
+  }
+  return -1
+}
