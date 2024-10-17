@@ -426,3 +426,76 @@ const missingNumber = function(nums) {
   }
   return -1
 }
+
+
+//269 https://leetcode.com/problems/alien-dictionary/
+
+
+//Input: words = ["wrt","wrf","er","ett","rftt"]
+//Output: "wertf"
+
+
+const alienOrder = function(words) {
+  const adjList = new Map();
+  const inDegree = new Map();
+
+
+  for (const word of words) {
+    for (const char of word) {
+      inDegree.set(char, 0);
+    }
+  }
+
+  for (let i = 0; i < words.length - 1; i++) {
+    const firstWord = words[i];
+    const secondWord = words[i + 1];
+    for ( let j = 0; j < Math.min(firstWord.length, secondWord.length); j++) {
+      const c = firstWord[j];
+      const d = secondWord[j];
+
+      if (c !== d) {
+        if (!adjList.has(c)) {
+          adjList.set(c, new Set());
+        }
+        if (!adjList.get(c).has(d)) {
+          adjList.get(c).add(d);
+          inDegree.set(d, inDegree.get(d) + 1);
+        }
+        break;
+      }
+    }
+
+    if (secondWord.length < firstWord.lengh && firstWord.startsWith(secondWord)) {
+      return "";
+    }
+  }
+
+  const output = [];
+  const queue = [];
+
+  for (const [char, degree] of inDegree.entries()) {
+    if (degree === 0) {
+      queue.push(char);
+    }
+  }
+
+  while (queue.length > 0) {
+    const c = queue.shift();
+    output.push(c);
+    if (adjList.has(c)) {
+      for (const d of adjList.get(c)) {
+        inDegree.set(d, inDegree.get(d) - 1);
+        if (inDegree.get(d) === 0) {
+          queue.push(d);
+        }
+      }
+    }
+  }
+
+  if (output.length < inDegree.size) {
+    return "";
+  }
+
+  return output.join("");
+};
+
