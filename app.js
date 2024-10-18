@@ -520,4 +520,36 @@ const closestValue = function(root, target) {
   return closest;
 };
 
+//213 https://leetcode.com/problems/house-robber-ii/description/
+
+//Input: nums = [1,2,3,1]
+//Output: 4
+//Explanation: Rob house 1 (money = 1) and then rob house 3 (money = 3).
+//Total amount you can rob = 1 + 3 = 4.
+
+
+class Solution {
+  rob(nums) {
+    if (nums.length === 0) return 0;
+    if (nums.length === 1) return nums[0];
+
+    let max1 = this.robSimple(nums, 0, nums.length - 2);
+    let max2 = this.robSimple(nums, 1, nums.length -1);
+
+    return Math.max(max1, max2);
+  }
+
+  robSimple(nums, start, end) {
+    let t1 = 0;
+    let t2 = 0;
+
+    for (let i = start; i <= end; i++) {
+      let temp = t1;
+      let current = nums[i];
+      t1 = Math.max(current + t2, t1);
+      t2 = temp;
+    }
+    return t1;
+  }
+}
 
