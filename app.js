@@ -499,3 +499,25 @@ const alienOrder = function(words) {
   return output.join("");
 };
 
+
+
+// https://leetcode.com/problems/closest-binary-search-tree-value/description/
+
+
+// Input: root = [4,2,5,1,3], target = 3.714286
+//Output: 4
+
+const closestValue = function(root, target) {
+  let closest = root.val;
+  while (root) {
+    if (Math.abs(root.val - target) < Math.abs(closest - target)) {
+      closest = root.val;
+    } else if (Math.abs(root.val - target) === Math.abs(closest - target)) {
+      closest = Math.min(root.val, closest);
+    }
+    root = target < root.val ? root.left : root.right;
+  }
+  return closest;
+};
+
+
