@@ -553,3 +553,26 @@ class Solution {
   }
 }
 
+
+//272 https://leetcode.com/problems/encode-and-decode-strings/description/
+
+
+//Input: root = [4,2,5,1,3], target = 3.714286, k = 2
+//Output: [4,3]
+
+
+const closestKValues = function(root, target, k) {
+  const arr = [];
+  dfs(root, arr);
+  arr.sort((o1, o2) => Math.abs(o1 - target) - Math.abs(o2 - target));
+  return arr.slice(0, k);
+};
+
+function dfs(node, arr) {
+  if (!node) return;
+  arr.push(node.val);
+  dfs(node.left, arr);
+  dfs(node.right, arr);
+}
+
+
