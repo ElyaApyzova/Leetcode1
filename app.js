@@ -632,4 +632,23 @@ function helper(num) {
   else return belowTwenty[Math.floor(num / 100)] + "  Hundred " + helper(num % 100);
 }
 
+//215 https://leetcode.com/problems/kth-largest-element-in-an-array/description/
+
+//Input: nums = [3,2,3,1,2,4,5,5,6], k = 4
+//Output: 4
+
+class Solution {
+  shortestPalindrome(s) {
+    const n = s.length;
+    const rev = s.split('').reverse().join('');
+    for (let i = 0; i < n; i++) {
+      if (s.substring(0, n - i) === rev.substring(i)) {
+        return rev.substring(0, i) + s;
+      }
+    }
+    return "";
+  }
+}
+
+
 
