@@ -575,4 +575,24 @@ function dfs(node, arr) {
   dfs(node.right, arr);
 }
 
+// 214  https://leetcode.com/problems/shortest-palindrome/description/
+
+
+// Input: s = "aacecaaa"
+//Output: "aaacecaaa"
+
+class Solution {
+  shortestPalindrome(s) {
+    const n = s.length;
+    const rev = s.split('').reverse().join('');
+    for (let i = 0; i < n; i++) {
+      if (s.substring(0, n - i) === rev.substring(i)) {
+        return rev.substring(0, i) + s;
+      }
+    }
+    return "";
+  }
+}
+
+
 
