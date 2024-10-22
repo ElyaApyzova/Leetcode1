@@ -650,5 +650,29 @@ class Solution {
   }
 }
 
+//274 https://leetcode.com/problems/h-index/
+
+//Input: citations = [3,0,6,1,5]
+//Output: 3
+//Explanation: [3,0,6,1,5] means the researcher has 5 papers in total and each of them had received 3, 0, 6, 1, 5 citations respectively.
+//Since the researcher has 3 papers with at least 3 citations each and the remaining two with no more than 3 citations each, their h-index is 3.
+
+
+const hIndex = function(citations) {
+  let n = citations.length;
+  let papers = new Array(n + 1).fill(0);
+
+  for (let c of citations) {
+    papers[Math.min(n, c)]++;
+  }
+
+  let k = n;
+  for (let s = papers[n]; k > s; s += papers[k]) {
+    k--;
+  }
+  return k;
+};
+
+
 
 
