@@ -673,6 +673,51 @@ const hIndex = function(citations) {
   return k;
 };
 
+//216 https://leetcode.com/problems/combination-sum-iii/description/
+
+//Input: k = 3, n = 9
+//Output: [[1,2,6],[1,3,5],[2,3,4]]
+//Explanation:
+//1 + 2 + 6 = 9
+//1 + 3 + 5 = 9
+//2 + 3 + 4 = 9
+
+//There are no other valid combinations.
+
+
+const combinationSum3 = function(k, n) {
+  const results = [];
+  const comb = [];
+
+  const backtrack = (remain, k, comb, nextStart) => {
+    if (remain === 0 && comb.length === k) {
+      results.push([...comb]);
+      return;
+    } else if (remain < 0 || comb.length === k) {
+      return;
+    }
+
+    for (let i = nextStart; i < 9; i++) {
+      comb.push(i + 1);
+      backtrack(remain - i - 1, k, comb, i + 1);
+      comb.pop();
+    }
+  };
+
+  backtrack(n, k, comb, 0);
+  return results;
+};
+
+
+// 275 https://leetcode.com/problems/h-index-ii/
+
+//Input: citations = [0,1,3,5,6]
+//Output: 3
+//Explanation: [0,1,3,5,6] means the researcher has 5 papers in total and each of them had received 0, 1, 3, 5, 6 citations respectively.
+//Since the researcher has 3 papers with at least 3 citations each and the remaining two with no more than 3 citations each, their h-index is 3.
+
+
+
 
 
 
