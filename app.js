@@ -737,5 +737,30 @@ const HIndex = function(citations) {
 };
 
 
+217 // https://leetcode.com/problems/contains-duplicate/description/
+
+Input: nums = [1,2,3,4]
+Output: false
+
+
+function containsDuplicate(nums) {
+  nums.sort((a, b) => a - b);
+  for (let i = 0; i < nums.length - 1; i++) {
+    if (nums[i] === nums[i + 1]) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+218 // https://leetcode.com/problems/the-skyline-problem/description/
+
+//Input: buildings = [[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]]
+//Output: [[2,10],[3,15],[7,12],[12,0],[15,10],[20,8],[24,0]]
+//Explanation:
+//Figure A shows the buildings of the input.
+//Figure B shows the skyline formed by those buildings. The red points in figure B represent the key points in the output list.
+
 
 
