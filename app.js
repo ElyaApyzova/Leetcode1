@@ -800,3 +800,29 @@ class Solution {
     return answer;
   }
 }
+
+
+276. //https://leetcode.com/problems/paint-fence/
+
+// Input: n = 3, k = 2
+//Output: 6
+//Explanation: All the possibilities are shown.
+//Note that painting all the posts red or all the posts green is invalid because there cannot be three posts in a row with the same color.
+
+
+const numWays = function(n, k) {
+  if (n === 1) {
+    return k;
+  }
+
+  let twoPostsBack = k;
+  let onePostBack = k * k;
+
+  for (let i = 3; i <= n; i++) {
+    let curr = (k - 1) * (onePostBack + twoPostsBack);
+    twoPostsBack = onePostBack;
+    onePostBack = curr;
+  }
+
+  return onePostBack;
+};
