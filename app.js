@@ -763,4 +763,40 @@ function containsDuplicate(nums) {
 //Figure B shows the skyline formed by those buildings. The red points in figure B represent the key points in the output list.
 
 
+class Solution {
+  getSkyline(buildings) {
+    const edgeSet = new Set();
+    for (const building of buildings) {
+      const [left, right] = building;
+      edgeSet.add(left);
+      edgeSet.add(right);
+    }
+    const edges = Array.from(edgeSet).sort((a, b) => a - b);
 
+    const edgeIndexMap = new Map();
+    edges.forEach((edge, i) => edgeIndexMap.set(edge, i));
+
+    const heights = new Array(edges.length).fill(0);
+
+    for (const building of buildings) {
+      const [left, right, height] = building;
+      const leftIndex = edgeIndexMap.get(left);
+      const rightIndex = edgeIndexMap.get(right);
+
+      for (let idx = leftIndex; idx < rightIndex; ++idx) {
+        heights[idx] = Math.max(heights[idx], height);
+      }
+    }
+
+    const answer = [];
+
+    for (let i = 0; i < heights.length; ++i) {
+      const currHeight = heights[i], currPos = edges[i];
+
+      if (answer.length === 0 || answer[answer.length - 1][1] !== currHeight) {
+        answer.push([currPos, currHeight]);
+      }
+    }
+    return answer;
+  }
+}
