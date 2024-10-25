@@ -954,6 +954,47 @@ class Solution {
 }
 
 
+220. // https://leetcode.com/problems/contains-duplicate-iii/description/
+
+//  Input: nums = [1,2,3,1], indexDiff = 3, valueDiff = 0
+//Output: true
+//Explanation: We can choose (i, j) = (0, 3).
+//We satisfy the three conditions:
+i != j --> 0 != 3
+abs(i - j) <= indexDiff --> abs(0 - 3) <= 3
+abs(nums[i] - nums[j]) <= valueDiff --> abs(1 - 1) <= 0
+
+
+function getID(x, w) {
+  return x < 0 ? Math.floor((x + 1) / w) - 1 : Math.floor(x / w);
+}
+
+const containsNearbyAlmostDuplicate = function(nums, k, t) {
+  if (t < 0) return false;
+  const buckets = new Map();
+  const w = t + 1;
+
+  for (let i = 0; i < nums.length; i++) {
+    const bucket = getID(nums[i], w);
+    if (buckets.has(bucket)) return true;
+    if (buckets.has(bucket - 1) && Math.abs(nums[i] - buckets.get(bucket - 1)) < w) return true;
+
+    if (buckets.has(bucket + 1) && Math.abs(nums[i] - buckets.get(bucket + 1)) < w) return true;
+
+    buckets.set(bucket, nums[i]);
+    if (i >= k) {
+      buckets.delete(getID(nums[i - k], w));
+    }
+  }
+  return false;
+};
+
+
+221. //https://leetcode.com/problems/maximal-square/description/
+
+//  Input: matrix = [["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]]
+//Output: 4
+
 
 
 
