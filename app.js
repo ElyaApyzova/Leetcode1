@@ -893,3 +893,68 @@ class Solution {
     return output;
   }
 }
+
+
+315. //https://leetcode.com/problems/count-of-smaller-numbers-after-self/editorial/
+
+
+//Input: nums = [5,2,6,1]
+//Output: [2,1,1,0]
+//Explanation:
+//To the right of 5 there are 2 smaller elements (2 and 1).
+//To the right of 2 there is only 1 smaller element (1).
+//To the right of 6 there is 1 smaller element (1).
+//To the right of 1 there is 0 smaller element.
+
+
+class Solution {
+  countSmaller(nums) {
+    const offset = 10000;
+    const size = 2 * 10000 + 1;
+    const tree = new Array(size * 2).fill(0);
+    const result = [];
+
+    for (let i = nums.length - 1; i >= 0; i--) {
+      const smallerCount = this.query(0, nums[i] + offset, tree, size);
+
+      result.push(smallerCount);
+      this.update(nums[i] + offset, 1, tree, size);
+    }
+    return result.reverse();
+  }
+
+  update(index, value, tree, size) {
+    index += size;
+    tree[index] += value;
+    while (index > 1) {
+      index = Math.floor(index / 2);
+      tree[index] = tree[index * 2] + tree[index * 2 + 1];
+    }
+  }
+
+  query(left, right, tree, size) {
+    let result = 0;
+    left += size;
+    right += size;
+    while (left < right) {
+      if (left % 2 === 1) {
+        result += tree[left];
+        left++;
+      }
+
+      left = Math.floor(left / 2);
+      if (right % 2 === 1) {
+        right--;
+        result += tree[right];
+      }
+      right = Math.floor(right / 2);
+    }
+    return result;
+  }
+}
+
+
+
+
+
+
