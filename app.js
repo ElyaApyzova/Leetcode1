@@ -842,3 +842,54 @@ const containsNearbyDuplicate = function(nums, k) {
   return false;
 };
 
+
+314. // https://leetcode.com/problems/binary-tree-vertical-order-traversal/description/
+
+
+//Input: root = [3,9,20,null,null,15,7]
+//Output: [[9],[3,15],[20],[7]]
+
+
+class TreeNode {
+  constructor(val) {
+    this.val = val;
+    this.left = null;
+    this.right = null;
+  }
+}
+
+class Solution {
+  verticalOrder(root) {
+    const output = [];
+    if (root === null) {
+      return output;
+    }
+
+    const columnTable = new Map();
+    const queue = [];
+    let column = 0;
+    queue.push([root, column]);
+
+    while (queue.length > 0) {
+      const [node, col] = queue.shift();
+
+      if (node !== null) {
+        if (!columnTable.has(col)) {
+          columnTable.set(col, []);
+        }
+
+        columnTable.get(col).push(node.val);
+
+        queue.push([node.left, col - 1]);
+        queue.push([node.right, col + 1]);
+      }
+    }
+
+    const sortedKeys = Array.from(columnTable.keys()).sort((a, b) => a - b);
+    for (const key of sortedKeys) {
+      output.push(columnTable.get(key));
+    }
+
+    return output;
+  }
+}
