@@ -1081,3 +1081,55 @@ function countNodes(root) {
 
   return Math.pow(2, d) - 1 + left;
 }
+
+
+227. // https://leetcode.com/problems/find-the-celebrity/description/
+
+//Input: graph = [[1,1,0],[0,1,0],[1,1,1]]
+//Output: 1
+//Explanation: There are three persons labeled with 0, 1 and 2. graph[i][j] = 1 means person i knows person j, otherwise graph[i][j] = 0 means person i does not know person j. The celebrity is the person labeled as 1 because both 0 and 2 know him but 1 does not know anybody.
+
+
+const Solution = function() {
+  this.n = 0;
+  this.cache = new Map();
+};
+
+Solution.prototype.findCelebrity = function(n) {
+  this.n = n;
+  let celebrityCandidate = 0;
+
+  for (let i = 1; i < n; i++) {
+    if (this.cachedKnows(celebrityCandidate, i)) {
+      celebrityCandidate = i;
+    }
+  }
+
+  return this.isCelebrity(celebrityCandidate) ? celebrityCandidate : -1;
+};
+
+Solution.prototype.isCelebrity = function(i) {
+
+  for (let j = 0; j < this.n; j++) {
+    if (i === j) continue;
+    if (this.cachedKnows(i, j) || !this.cachedKnows(j, i)) {
+      return false;
+    }
+  }
+  return true;
+};
+
+Solution.prototype.cachedKnows = function(a, b) {
+  const key = `${a},${b}`;
+  if (!this.cache.has(key)) {
+    this.cache.set(key, knows(a, b));
+  }
+  return this.cache.get(key);
+};
+
+
+223.  //https://leetcode.com/problems/rectangle-area/description/
+
+//Input: ax1 = -3, ay1 = 0, ax2 = 3, ay2 = 4, bx1 = 0, by1 = -1, bx2 = 9, by2 = 2
+//Output: 45
+
