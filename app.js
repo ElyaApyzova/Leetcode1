@@ -1025,3 +1025,59 @@ const maximalSquare = function(matrix) {
 
 
 
+class TreeNode {
+  constructor(val, left, right) {
+    this.val = val === undefined ? 0 : val;
+    this.left = left === undefined ? null : left;
+    this.right = right === undefined ? null : right;
+  }
+}
+
+
+function computeDepth(node) {
+  let d = 0;
+
+  while ( node.left !== null) {
+    node = node.left;
+    ++d;
+  }
+  return d;
+}
+
+function exists(idx, d, node) {
+  let left = 0, right = Math.pow(2, d) - 1;
+
+  for (let i = 0; i < d; ++i) {
+    let pivot = left + Math.floor((right - left) / 2);
+
+    if (idx <= pivot) {
+      node = node.left;
+      right = pivot;
+    
+    } else {
+      node = node.right;
+      left = pivot + 1;
+    }
+  }
+
+  return node !== null;
+}
+
+function countNodes(root) {
+  if (root === null) return 0;
+
+  let d = computeDepth(root);
+
+  if (d === 0) return 1;
+
+  let left = 1, right = Math.pow(2, d) - 1;
+
+  while (left <= right) {
+    let pivot = left + Math.floor((right - left) / 2);
+
+    if (exists(pivot, d, root)) left = pivot + 1;
+    else right = pivot - 1;
+  }
+
+  return Math.pow(2, d) - 1 + left;
+}
