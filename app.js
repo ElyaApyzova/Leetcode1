@@ -1133,3 +1133,27 @@ Solution.prototype.cachedKnows = function(a, b) {
 //Input: ax1 = -3, ay1 = 0, ax2 = 3, ay2 = 4, bx1 = 0, by1 = -1, bx2 = 9, by2 = 2
 //Output: 45
 
+
+function computeArea(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
+  const areaOfA = (ay2 - ay1) * (ax2 - ax1);
+  const areaOfB = (by2 - by1) * (bx2 - bx1);
+  
+  const left = Math.max(ax1, bx1);
+  const right = Math.min(ax2, bx2);
+  const xOverlap = right - left;
+
+  const top = Math.min(ay2, by2);
+  const bottom = Math.max(ay1, by1);
+  const yOverlap = top - bottom;
+
+  let areaOfOverlap = 0;
+  if (xOverlap > 0 && yOverlap > 0) {
+    areaOfOverlap = xOverlap * yOverlap;
+  }
+
+  const totalArea = areaOfA + areaOfB - areaOfOverlap;
+
+  return totalArea;
+  
+};
+
