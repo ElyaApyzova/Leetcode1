@@ -1154,6 +1154,26 @@ function computeArea(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
   const totalArea = areaOfA + areaOfB - areaOfOverlap;
 
   return totalArea;
-  
+
 };
 
+
+224. // https://leetcode.com/problems/basic-calculator/
+
+Input: s = "(1+(4+5+2)-3)+(6+8)"
+Output: 23
+
+
+class Solution {
+  evaluateExpr(stack) {
+    if (stack.length === 0 || typeof stack[stack.length - 1] !== 'number') {
+      stack.push(0);
+    }
+
+    let res = stack.pop();
+
+    while (stack.length !== 0 && stack[stack.length - 1] !== ')') {
+      let sign = stack.pop();
+    }
+  }
+}
