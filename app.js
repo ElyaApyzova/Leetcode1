@@ -1220,3 +1220,25 @@ class Solution {
     return this.evaluateExpr(stack);
   }
 }
+
+
+367. // https://leetcode.com/problems/valid-perfect-square/description/
+
+// Input: num = 16
+//Output: true
+//Explanation: We return true because 4 * 4 = 16 and 4 is an integer.
+
+
+class Solution {
+  isPerfectSquare(num) {
+    if (num < 2) {
+      return true;
+    }
+
+    let x = Math.floor(num / 2);
+    while (x * x > num) {
+      x = Math.floor((x + Math.floor(num / x)) / 2);
+    }
+    return x * x === num;
+  }
+}
