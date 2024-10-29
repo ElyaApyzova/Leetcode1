@@ -1293,3 +1293,27 @@ class MyStack {
     return this.q1.length === 0;
   }
 }
+
+
+226. // https://leetcode.com/problems/invert-binary-tree/
+
+//Input: root = [4,2,7,1,3,6,9]
+//Output: [4,7,2,9,6,3,1]
+
+function TreeNode(val, left, right) {
+  this.val = (val === undefined ? 0 : val)
+  this.left = (left === undefined ? null : left)
+  this.right = (right === undefined ? null : right)
+}
+
+var invertTree = function(root) {
+  if (root === null) {
+    return null;
+  }
+
+  const right = invertTree(root.right);
+  const left = invertTree(root.left);
+  root.left = right;
+  root.right = left;
+  return root;
+};
