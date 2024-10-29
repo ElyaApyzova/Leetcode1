@@ -1242,3 +1242,54 @@ class Solution {
     return x * x === num;
   }
 }
+
+
+225. //https://leetcode.com/problems/implement-stack-using-queues/description/
+
+// Input
+//["MyStack", "push", "push", "top", "pop", "empty"]
+//[[], [1], [2], [], [], []]
+//Output
+//[null, null, null, 2, 2, false]
+
+//Explanation
+//MyStack myStack = new MyStack();
+//myStack.push(1);
+//myStack.push(2);
+//myStack.top(); // return 2
+//myStack.pop(); // return 2
+//myStack.empty(); // return False
+
+
+class MyStack {
+  constructor() {
+    this.q1 = [];
+    this.q2 = [];
+    this.topElement = null;
+  }
+
+  push(x) {
+    this.q2.push(x);
+    this.topElement = x;
+    while (this.q1.length) {
+      this.q2.push(this.q1.shift());
+    }
+    [this.q1, this.q2] = [this.q2, this.q1];
+  }
+
+  pop() {
+    const result = this.q1.shift();
+    if (this.q1.length) {
+      this.topElement = this.q1[0];
+    }
+    return result;
+  }
+
+  top() {
+    return this.topElement;
+  }
+
+  empty() {
+    return this.q1.length === 0;
+  }
+}
