@@ -1174,6 +1174,49 @@ class Solution {
 
     while (stack.length !== 0 && stack[stack.length - 1] !== ')') {
       let sign = stack.pop();
+
+      if (sign === '+') {
+        res += stack.pop();
+      } else {
+        res -= stack.pop();
+      }
     }
+    return res;
+  }
+
+  calculate(s) {
+    let operand = 0;
+    let n = 0;
+    let stack = [];
+
+    for (let i = s.length - 1; i >= 0; i--) {
+      let ch = s[i];
+
+      if (/\d/.test(ch)) {
+        operand = Math.pow(10, n) * (parseInt(ch)) + operand;
+
+        n += 1;
+      } else if (ch !== ' ') {
+        if (n !== 0) {
+          stack.push(operand);
+          n = 0;
+          operand = 0;
+        }
+
+        if (ch === '(') {
+          let res = this.evaluateExpr(stack);
+          stack.pop();
+          stack.push(res);
+        } else {
+          stack.push(ch);
+        }
+      }
+    }
+
+    if (n !== 0) {
+      stack.push(operand);
+    }
+
+    return this.evaluateExpr(stack);
   }
 }
